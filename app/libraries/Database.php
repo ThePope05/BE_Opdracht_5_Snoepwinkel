@@ -50,7 +50,7 @@ class Database
     {
         if ($return) {
             $this->statement->execute();
-            return $this->statement->fetch(PDO::FETCH_OBJ);
+            return $this->statement->fetchAll(PDO::FETCH_OBJ);
         } else {
             return $this->statement->execute();
         }

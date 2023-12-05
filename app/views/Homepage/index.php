@@ -1,12 +1,9 @@
-<?php
-$componentData = [
-    'title' => 'Homepage',
-];
-$this->component('pageHead', $componentData);
-?>
+<?php $this->component('pageHead', ['title' => "HomePage"]); ?>
 
 <body>
-    <h1><?= $data['title']; ?></h1>
+    <div class="container">
+        <h1 class="title"><?= $data['title']; ?></h1>
+    </div>
 </body>
 
 </html>

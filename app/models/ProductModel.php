@@ -11,7 +11,15 @@ class ProductModel
 
     public function getAllProducts()
     {
-        $this->db->query("SELECT * FROM products");
+        $this->db->query("SELECT * FROM product");
+
+        return $this->db->execute(true);
+    }
+
+    public function getAllProductsWithStorageData()
+    {
+        $this->db->query("SELECT * FROM product
+                          INNER JOIN storage ON product.id = storage.productid");
 
         return $this->db->execute(true);
     }

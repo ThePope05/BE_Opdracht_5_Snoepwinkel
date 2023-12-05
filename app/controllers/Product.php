@@ -5,13 +5,11 @@ class Product extends BaseController
 {
     public function index()
     {
-        $allProducts = $this->model('ProductModel')->getAllProducts();
-        $allStorageInfo = $this->model('StorageModel')->getAllStorageInfo();
+        $allProducts = $this->model('ProductModel')->getAllProductsWithStorageData();
 
         $data = [
             'title' => 'Product',
-            'products' => $allProducts,
-            'storage' => $allStorageInfo
+            'products' => $allProducts
         ];
 
         $this->view('Product/index', $data);

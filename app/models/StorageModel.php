@@ -1,6 +1,6 @@
 <?php
 
-class ProductModel
+class StorageModel
 {
     private $db;
 
@@ -9,9 +9,9 @@ class ProductModel
         $this->db = new Database();
     }
 
-    public function getAllProducts()
+    public function getAllStorageInfo()
     {
-        $this->db->query("SELECT * FROM products");
+        $this->db->query("SELECT * FROM storage");
 
         return $this->db->execute(true);
     }

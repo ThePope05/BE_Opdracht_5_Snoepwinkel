@@ -16,49 +16,110 @@ class Product extends BaseController
             ];
         }
 
+        $tableData = [];
+
+        foreach ($allProductData as $group) {
+
+
+            $allergyEl = "
+            <a href='/Product/AllergyInfo/" . $group['product']->id . "' class='danger'>
+                <span class='material-symbols-rounded'>
+                    error
+                </span>
+            </a>
+        ";
+
+            $deliveryEl = "
+            <a href='/Product/DeliveryInfo/" . $group['product']->id . "'>
+                <span class='material-symbols-rounded'>
+                    local_shipping
+                </span>
+            </a>
+        ";
+
+            $tableData[count($tableData)] = [
+                'tableData' => [
+                    $group['product']->barcode,
+                    $group['product']->name,
+                    $group['storageData']->packageUnit . " Kg",
+                    $group['storageData']->inStorage,
+                    $allergyEl,
+                    $deliveryEl
+                ]
+            ];
+        }
+
         $data = [
-            'title' => 'Products',
-            'products' => $allProductData
+            'title' => 'Product overview',
+            'tableHead' => [
+                'Barcode',
+                'Name',
+                'Package unit(Kg)',
+                'Amount in storage',
+                'Allergy info',
+                'Delivery info'
+            ],
+            'tableData' => $tableData
         ];
 
-        $this->view('Product/index', $data);
+        $this->view('Product/tablePage', $data);
     }
 
     public function AllergyInfo($productId)
     {
         $allergyData = $this->model('ProductModel')->getProductAllergyData($productId);
 
-        if (count($allergyData) == 0) {
-            $allergyData = [
-                (object) [
-                    'name' => 'No allergy info',
-                    'description' => 'No allergy info'
+        $tableData = [];
+
+        foreach ($allergyData as $allergy) {
+            $tableData[count($tableData)] = [
+                'tableData' => [
+                    $allergy->name,
+                    $allergy->description
                 ]
             ];
         }
 
         $data = [
             'title' => 'Allergy info',
-            'allergyData' => $allergyData
+            'tableHead' => [
+                'Name',
+                'Description'
+            ],
+            'tableData' => $tableData
         ];
 
-        $this->view('Product/AllergyInfo', $data);
+        $this->view('Product/tablePage', $data);
     }
 
     public function DeliveryInfo($productId)
     {
         $thisProduct = $this->model('ProductModel')->getProductById($productId);
 
-        $allProductData = [
-            'product' => $thisProduct,
-            'delivery' => $this->model('ProductModel')->getProductSupplierData($thisProduct->id)
+        $supplierData = $this->model('ProductModel')->getProductSupplierData($productId);
+
+        $tableData = [];
+
+        $tableData[count($tableData)] = [
+            'tableData' => [
+                $thisProduct->name,
+                $supplierData->dateDelivery,
+                $supplierData->amount,
+                $supplierData->dateNextDelivery
+            ]
         ];
 
         $data = [
             'title' => 'Delivery info',
-            'product' => $allProductData
+            'tableHead' => [
+                'Product name',
+                'Date of last delivery',
+                'Amount',
+                'Date of next delivery'
+            ],
+            'tableData' => $tableData
         ];
 
-        $this->view('Product/DeliveryInfo', $data);
+        $this->view('Product/tablePage', $data);
     }
 }

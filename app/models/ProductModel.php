@@ -11,7 +11,9 @@ class ProductModel
 
     public function getAllProducts()
     {
-        $this->db->query("SELECT * FROM product");
+        $this->db->query("SELECT DISTINCT p.id, p.name, p.barcode FROM product p
+                          LEFT JOIN productsupplier ON p.id = productsupplier.productid
+                          ORDER BY productsupplier.dateDelivery ASC");
 
         return $this->db->execute(true);
     }
@@ -41,7 +43,8 @@ class ProductModel
     {
         $this->db->query("SELECT * FROM supplier
                           INNER JOIN productsupplier ON productsupplier.supplierid = supplier.id
-                          WHERE productsupplier.productid = :productId");
+                          WHERE productsupplier.productid = :productId
+                          ORDER BY productsupplier.dateDelivery ASC");
 
         $this->db->bind(':productId', $productId);
 

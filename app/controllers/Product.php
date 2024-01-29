@@ -22,20 +22,32 @@ class Product extends BaseController
 
 
             $allergyEl = "
-            <a href='/Product/AllergyInfo/" . $group['product']->id . "' class='danger'>
-                <span class='material-symbols-rounded'>
-                    error
-                </span>
-            </a>
-        ";
+                <a href='/Product/AllergyInfo/" . $group['product']->id . "' class='danger'>
+                    <span class='material-symbols-rounded'>
+                        error
+                    </span>
+                </a>
+            ";
 
             $deliveryEl = "
-            <a href='/Product/DeliveryInfo/" . $group['product']->id . "'>
-                <span class='material-symbols-rounded'>
-                    local_shipping
-                </span>
-            </a>
-        ";
+                <a href='/Product/DeliveryInfo/" . $group['product']->id . "'>
+                    <span class='material-symbols-rounded'>
+                        local_shipping
+                    </span>
+                </a>
+            ";
+
+            if (!$this->model('ProductModel')->productHasAllergyData($group['product']->id)) {
+                $allergyEl = "
+                    <span class='material-symbols-rounded' style='color: green;'>
+                        check_circle
+                    </span> 
+                ";
+            }
+
+            if ($group['storageData']->inStorage < 1) {
+                $group['storageData']->inStorage = "No stock";
+            }
 
             $tableData[count($tableData)] = [
                 'tableData' => [

@@ -7,8 +7,6 @@
         <table>
             <thead>
                 <?php
-                // var_dump($data['tableHead']);
-                // exit;
                 $this->component('tableHead', ['tableHead' => $data['tableHead']]);
                 ?>
             </thead>

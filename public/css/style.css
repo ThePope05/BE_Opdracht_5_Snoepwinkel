@@ -59,7 +59,7 @@ table thead tr th{
 table tr{
     padding: .5rem;
     text-align: center;
-    /* border-bottom: 1px solid #000; */
+    transition: background-color .1s ease-in-out;    
 }
 
 table tr:nth-child(even){
@@ -68,6 +68,10 @@ table tr:nth-child(even){
 
 table tr:last-child{
     border-bottom: none;
+}
+
+table tr:hover{
+    background-color: #777777;
 }
 
 table tr td{

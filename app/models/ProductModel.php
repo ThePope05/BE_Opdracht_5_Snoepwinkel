@@ -16,11 +16,44 @@ class ProductModel
         return $this->db->execute(true);
     }
 
-    public function getAllProductsWithStorageData()
+    public function getProductById(int $productId)
     {
-        $this->db->query("SELECT * FROM product
-                          INNER JOIN storage ON product.id = storage.productid");
+        $this->db->query("SELECT * FROM product WHERE id = :productId");
+
+        $this->db->bind(':productId', $productId);
+
+        return $this->db->execute(true)[0];
+    }
+
+    public function getProductAllergyData(int $productId)
+    {
+        $this->db->query("SELECT * FROM productallergy
+                          INNER JOIN allergy ON productallergy.allergyid = allergy.id
+                          WHERE productallergy.productid = :productId");
+
+        $this->db->bind(':productId', $productId);
+
 
         return $this->db->execute(true);
+    }
+
+    public function getProductSupplierData(int $productId)
+    {
+        $this->db->query("SELECT * FROM supplier
+                          INNER JOIN productsupplier ON productsupplier.supplierid = supplier.id
+                          WHERE productsupplier.productid = :productId");
+
+        $this->db->bind(':productId', $productId);
+
+        return $this->db->execute(true)[0];
+    }
+
+    public function productHasAllergyData(int $productId)
+    {
+        $this->db->query("SELECT * FROM productallergy WHERE productid = :productId");
+
+        $this->db->bind(':productId', $productId);
+
+        return count($this->db->execute(true)) > 0;
     }
 }

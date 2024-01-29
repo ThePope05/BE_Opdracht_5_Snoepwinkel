@@ -7,8 +7,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Description</th>
+                    <th class="column-1">Name</th>
+                    <th class="column-2">Description</th>
                 </tr>
             </thead>
 

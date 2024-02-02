@@ -3,9 +3,16 @@
 
 class Product extends BaseController
 {
+    private $model;
+
+    public function __construct()
+    {
+        $this->model = $this->model('ProductModel');
+    }
+
     public function index()
     {
-        $allProducts = $this->model('ProductModel')->getAllProducts();
+        $allProducts = $this->model->getAllProducts();
 
         $allProductData = [];
 
@@ -37,7 +44,7 @@ class Product extends BaseController
                 </a>
             ";
 
-            if (!$this->model('ProductModel')->productHasAllergyData($group['product']->id)) {
+            if (!$this->model->productHasAllergyData($group['product']->id)) {
                 $allergyEl = "
                     <span class='material-symbols-rounded' style='color: green;'>
                         check_circle
@@ -79,7 +86,7 @@ class Product extends BaseController
 
     public function AllergyInfo($productId)
     {
-        $allergyData = $this->model('ProductModel')->getProductAllergyData($productId);
+        $allergyData = $this->model->getProductAllergyData($productId);
 
         $tableData = [];
 
@@ -106,9 +113,9 @@ class Product extends BaseController
 
     public function DeliveryInfo($productId)
     {
-        $thisProduct = $this->model('ProductModel')->getProductById($productId);
+        $thisProduct = $this->model->getProductById($productId);
 
-        $supplierData = $this->model('ProductModel')->getProductSupplierData($productId);
+        $supplierData = $this->model->getProductSupplierData($productId);
 
         $tableData = [];
 
